@@ -1,0 +1,87 @@
+timestamp,result,shot_origin,notes,Game,nshots,player,goal_area
+2026-02-14 11:04:14,Save,Wing,Bulk entry,Xico-S.Bernardo,0,Zé,Unknown
+2026-02-14 11:04:14,Goal,Wing,Bulk entry,Xico-S.Bernardo,5,Zé,Unknown
+2026-02-14 11:33:21,Save,6m,Bulk entry,Xico-S.Bernardo,1,Zé,Unknown
+2026-02-14 11:33:21,Goal,6m,Bulk entry,Xico-S.Bernardo,7,Zé,Unknown
+2026-02-14 11:33:48,Save,9m,Bulk entry,Xico-S.Bernardo,5,Zé,Unknown
+2026-02-14 11:33:48,Goal,9m,Bulk entry,Xico-S.Bernardo,6,Zé,Unknown
+2026-02-14 11:34:03,Save,Counter Attack,Bulk entry,Xico-S.Bernardo,2,Zé,Unknown
+2026-02-14 11:34:03,Goal,Counter Attack,Bulk entry,Xico-S.Bernardo,2,Zé,Unknown
+2026-02-14 11:37:18,Save,7m (penalty),Bulk entry,Xico-S.Bernardo,1,Zé,Unknown
+2026-02-14 11:37:18,Goal,7m (penalty),Bulk entry,Xico-S.Bernardo,3,Zé,Unknown
+2026-02-14 11:43:06,Goal,7m (penalty),Bulk entry,Xico-S.Bernardo,1,Leo,Unknown
+2026-02-14 11:43:30,Goal,7m (penalty),Bulk entry,Xico-S.Bernardo,1,Tiago,Unknown
+2026-02-14 11:50:23,Goal,7m (penalty),Bulk entry,Porto-Xico,2,Leo,Unknown
+2026-02-14 11:50:36,Save,7m (penalty),Bulk entry,Porto-Xico,1,Zé,Unknown
+2026-02-14 11:50:36,Goal,7m (penalty),Bulk entry,Porto-Xico,4,Zé,Unknown
+2026-02-14 11:50:49,Save,Wing,Bulk entry,Porto-Xico,1,Zé,Unknown
+2026-02-14 11:50:49,Goal,Wing,Bulk entry,Porto-Xico,6,Zé,Unknown
+2026-02-14 11:51:12,Save,6m,Bulk entry,Porto-Xico,5,Zé,Unknown
+2026-02-14 11:51:12,Goal,6m,Bulk entry,Porto-Xico,9,Zé,Unknown
+2026-02-14 11:51:27,Save,9m,Bulk entry,Porto-Xico,3,Zé,Unknown
+2026-02-14 11:51:27,Goal,9m,Bulk entry,Porto-Xico,3,Zé,Unknown
+2026-02-14 11:51:39,Save,Counter Attack,Bulk entry,Porto-Xico,1,Zé,Unknown
+2026-02-14 11:51:39,Goal,Counter Attack,Bulk entry,Porto-Xico,4,Zé,Unknown
+2026-02-14 12:16:54,Save,7m (penalty),Bulk entry,Sporting-Xico,1,Zé,Unknown
+2026-02-14 12:16:54,Goal,7m (penalty),Bulk entry,Sporting-Xico,1,Zé,Unknown
+2026-02-14 12:17:14,Goal,Wing,Bulk entry,Sporting-Xico,4,Zé,Unknown
+2026-02-14 12:17:28,Save,6m,Bulk entry,Sporting-Xico,2,Zé,Unknown
+2026-02-14 12:17:28,Goal,6m,Bulk entry,Sporting-Xico,9,Zé,Unknown
+2026-02-14 12:17:47,Save,9m,Bulk entry,Sporting-Xico,3,Zé,Unknown
+2026-02-14 12:17:47,Goal,9m,Bulk entry,Sporting-Xico,6,Zé,Unknown
+2026-02-14 12:18:34,Save,9m,Bulk entry,Sporting-Xico,1,Zé,Unknown
+2026-02-14 12:18:34,Goal,9m,Bulk entry,Sporting-Xico,5,Zé,Unknown
+2026-02-14 12:19:02,Goal,7m (penalty),Bulk entry,Sporting-Xico,2,Leo,Unknown
+2026-02-14 12:19:11,Save,6m,Bulk entry,Sporting-Xico,1,Leo,Unknown
+2026-02-14 12:19:19,Save,9m,Bulk entry,Sporting-Xico,2,Leo,Unknown
+2026-02-14 12:19:19,Goal,9m,Bulk entry,Sporting-Xico,1,Leo,Unknown
+2026-02-14 12:31:42,Save,7m (penalty),Bulk entry,Carvalhos-Xico,2,Zé,Unknown
+2026-02-14 12:31:42,Goal,7m (penalty),Bulk entry,Carvalhos-Xico,2,Zé,Unknown
+2026-02-14 12:31:53,Save,Wing,Bulk entry,Carvalhos-Xico,1,Zé,Unknown
+2026-02-14 12:31:53,Goal,Wing,Bulk entry,Carvalhos-Xico,4,Zé,Unknown
+2026-02-14 12:32:10,Save,6m,Bulk entry,Carvalhos-Xico,4,Zé,Unknown
+2026-02-14 12:32:10,Goal,6m,Bulk entry,Carvalhos-Xico,10,Zé,Unknown
+2026-02-14 12:32:31,Save,9m,Bulk entry,Carvalhos-Xico,2,Zé,Unknown
+2026-02-14 12:32:31,Goal,9m,Bulk entry,Carvalhos-Xico,9,Zé,Unknown
+2026-02-14 12:32:43,Goal,Counter Attack,Bulk entry,Carvalhos-Xico,9,Zé,Unknown
+2026-02-14 12:35:34,Goal,7m (penalty),Bulk entry,Xico-Tirso,2,Zé,Unknown
+2026-02-14 12:35:40,Goal,Wing,Bulk entry,Xico-Tirso,1,Zé,Unknown
+2026-02-14 12:35:51,Save,6m,Bulk entry,Xico-Tirso,4,Zé,Unknown
+2026-02-14 12:35:51,Goal,6m,Bulk entry,Xico-Tirso,4,Zé,Unknown
+2026-02-14 12:36:03,Save,9m,Bulk entry,Xico-Tirso,1,Zé,Unknown
+2026-02-14 12:36:03,Goal,9m,Bulk entry,Xico-Tirso,5,Zé,Unknown
+2026-02-14 12:36:26,Goal,Counter Attack,Bulk entry,Xico-Tirso,3,Zé,Unknown
+2026-02-14 12:39:00,Save,7m (penalty),Bulk entry,Xico-Tirso,1,Leo,Unknown
+2026-02-14 12:39:00,Goal,7m (penalty),Bulk entry,Xico-Tirso,1,Leo,Unknown
+2026-02-14 12:39:09,Save,Wing,Bulk entry,Xico-Tirso,2,Leo,Unknown
+2026-02-14 12:39:09,Goal,Wing,Bulk entry,Xico-Tirso,3,Leo,Unknown
+2026-02-14 12:39:17,Save,6m,Bulk entry,Xico-Tirso,1,Leo,Unknown
+2026-02-14 12:39:17,Goal,6m,Bulk entry,Xico-Tirso,3,Leo,Unknown
+2026-02-14 12:39:43,Save,9m,Bulk entry,Xico-Tirso,2,Leo,Unknown
+2026-02-14 12:39:43,Goal,9m,Bulk entry,Xico-Tirso,6,Leo,Unknown
+2026-02-14 12:39:53,Save,Counter Attack,Bulk entry,Xico-Tirso,1,Leo,Unknown
+2026-02-14 12:39:53,Goal,Counter Attack,Bulk entry,Xico-Tirso,2,Leo,Unknown
+2026-02-14 12:43:55,Goal,7m (penalty),Bulk entry,Almada-Xico,3,Zé,Unknown
+2026-02-14 12:44:04,Save,Wing,Bulk entry,Almada-Xico,2,Zé,Unknown
+2026-02-14 12:44:04,Goal,Wing,Bulk entry,Almada-Xico,5,Zé,Unknown
+2026-02-14 12:44:22,Save,6m,Bulk entry,Almada-Xico,3,Zé,Unknown
+2026-02-14 12:44:22,Goal,6m,Bulk entry,Almada-Xico,15,Zé,Unknown
+2026-02-14 12:44:39,Save,9m,Bulk entry,Almada-Xico,9,Zé,Unknown
+2026-02-14 12:44:39,Goal,9m,Bulk entry,Almada-Xico,3,Zé,Unknown
+2026-02-14 12:44:52,Save,Counter Attack,Bulk entry,Almada-Xico,1,Zé,Unknown
+2026-02-14 12:44:52,Goal,Counter Attack,Bulk entry,Almada-Xico,2,Zé,Unknown
+2026-02-14 12:46:28,Goal,7m (penalty),Bulk entry,Almada-Xico,1,Leo,Unknown
+2026-02-14 12:46:40,Goal,7m (penalty),Bulk entry,Almada-Xico,1,Tiago,Unknown
+2026-02-14 12:48:01,Goal,7m (penalty),Bulk entry,Xico-BoaHora,1,Tiago,Unknown
+2026-02-14 12:48:08,Goal,6m,Bulk entry,Xico-BoaHora,3,Tiago,Unknown
+2026-02-14 12:48:14,Goal,Counter Attack,Bulk entry,Xico-BoaHora,1,Tiago,Unknown
+2026-02-14 12:48:16,Goal,9m,Bulk entry,Xico-BoaHora,1,Tiago,Unknown
+2026-02-14 12:49:46,Goal,7m (penalty),Bulk entry,Xico-BoaHora,1,Zé,Unknown
+2026-02-14 12:49:53,Save,Wing,Bulk entry,Xico-BoaHora,1,Zé,Unknown
+2026-02-14 12:49:53,Goal,Wing,Bulk entry,Xico-BoaHora,3,Zé,Unknown
+2026-02-14 12:50:10,Save,6m,Bulk entry,Xico-BoaHora,1,Zé,Unknown
+2026-02-14 12:50:10,Goal,6m,Bulk entry,Xico-BoaHora,11,Zé,Unknown
+2026-02-14 12:50:21,Save,9m,Bulk entry,Xico-BoaHora,2,Zé,Unknown
+2026-02-14 12:50:21,Goal,9m,Bulk entry,Xico-BoaHora,8,Zé,Unknown
+2026-02-14 12:50:32,Save,Counter Attack,Bulk entry,Xico-BoaHora,1,Zé,Unknown
+2026-02-14 12:50:32,Goal,Counter Attack,Bulk entry,Xico-BoaHora,5,Zé,Unknown
