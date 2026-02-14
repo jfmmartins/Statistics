@@ -2,7 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 from datetime import datetime
+from supabase import create_client, Client
 import os
+import dotenv
 
 # Page configuration with custom theme
 st.set_page_config(
@@ -224,26 +226,65 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state
-if 'shots_data' not in st.session_state:
-    st.session_state.shots_data = []
+def env_exists():
+    """Check if .env file exists"""
+    return os.path.exists(".env")
 
-# File paths
-DATA_FILE = 'goalkeeper_stats.csv'
-DATA_FILE_ZONES = 'goalkeeper_stats_zones.csv'
+# Initialize Supabase client
+@st.cache_resource
+def init_supabase():
+    url = st.secrets["supabase"]["url"] if not env_exists() else dotenv.get_key(".env", "SUPABASE_URL")
+    key = st.secrets["supabase"]["key"] if not env_exists() else dotenv.get_key(".env", "SUPABASE_KEY")
+    return create_client(url, key)
+
+try:
+
+    supabase: Client = init_supabase()
+except Exception as e:
+    st.error("⚠️ Supabase connection failed. Please check your secrets configuration.")
+    st.stop()
 
 # Data functions
 def load_data(zones=False):
-    file_path = DATA_FILE_ZONES if zones else DATA_FILE
-    if os.path.exists(file_path):
-        return pd.read_csv(file_path)
-    if zones:
-        return pd.DataFrame(columns=['timestamp', 'result', 'shot_origin', 'nshots', 'notes', 'Game', 'player'])
-    return pd.DataFrame(columns=['timestamp', 'goal_area', 'result', 'shot_origin', 'notes', 'Game', 'player', 'nshots'])
+    """Load data from Supabase"""
+    try:
+        table_name = "shots_bulk" if zones else "shots_detailed"
+        response = supabase.table(table_name).select("*").execute()
+        
+        if response.data:
+            df = pd.DataFrame(response.data)
+            return df
+        else:
+            if zones:
+                return pd.DataFrame(columns=['id', 'timestamp', 'result', 'shot_origin', 'nshots', 'notes', 'Game', 'player'])
+            return pd.DataFrame(columns=['id', 'timestamp', 'goal_area', 'result', 'shot_origin', 'notes', 'Game', 'player', 'nshots'])
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return pd.DataFrame()
 
-def save_data(df, zones=False):
-    file_path = DATA_FILE_ZONES if zones else DATA_FILE
-    df.to_csv(file_path, index=False)
+def save_shot(data, zones=False):
+    """Save a shot to Supabase"""
+    try:
+        table_name = "shots_bulk" if zones else "shots_detailed"
+        response = supabase.table(table_name).insert(data).execute()
+        return True
+    except Exception as e:
+        st.error(f"Error saving data: {e}")
+        return False
+
+def delete_all_data(zones=False):
+    """Delete all data from a table"""
+    try:
+        table_name = "shots_bulk" if zones else "shots_detailed"
+        # Get all IDs first
+        response = supabase.table(table_name).select("id").execute()
+        if response.data:
+            for row in response.data:
+                supabase.table(table_name).delete().eq('id', row['id']).execute()
+        return True
+    except Exception as e:
+        st.error(f"Error deleting data: {e}")
+        return False
 
 # Header with emoji
 st.markdown('<span class="emoji">🥅</span>', unsafe_allow_html=True)
@@ -262,9 +303,9 @@ with tab1:
         st.markdown("*Record shots with goal area information*")
         
         game = st.text_input("Game/Match", "", key='detailed_game')
-
+        
         player = st.text_input("Player Name", "", key='detailed_player')
-
+        
         shot_origin = st.selectbox(
             "Shot Origin",
             ["6m", "9m", "7m (penalty)", "Wing", "Counter Attack", "Unknown"],
@@ -285,24 +326,19 @@ with tab1:
         with col_b:
             nr = st.number_input("# Shots", min_value=1, value=1, step=1, key='detailed_nr')
         
-        
-        
         if st.button("➕ ADD SHOT", type="primary", key='add_detailed'):
             new_entry = {
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'timestamp': datetime.now().isoformat(),
                 'goal_area': goal_area,
                 'result': result,
                 'shot_origin': shot_origin,
-                'Game': game.replace(' ', ''),
-                'player': player.replace(' ', ''),
+                'Game': game,
+                'player': player,
                 'nshots': int(nr)
             }
             
-            df = load_data(zones=False)
-            df = pd.concat([df, pd.DataFrame([new_entry])], ignore_index=True)
-            save_data(df, zones=False)
-            
-            st.success(f"✅ {int(nr)} shot(s) recorded: {result} in {goal_area}")
+            if save_shot(new_entry, zones=False):
+                st.success(f"✅ {int(nr)} shot(s) recorded: {result} in {goal_area} from {shot_origin}")
     
     with col2:
         st.markdown("## 📝 BULK ENTRY")
@@ -328,46 +364,44 @@ with tab1:
             submitted = st.form_submit_button("➕ ADD BULK DATA")
             
             if submitted and (num_saves > 0 or num_goals > 0):
-                df_zones = load_data(zones=True)
+                success = True
                 
                 if num_saves > 0:
                     new_entry = {
-                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        'timestamp': datetime.now().isoformat(),
                         'result': 'Save',
                         'shot_origin': bulk_origin,
                         'nshots': int(num_saves),
                         'notes': 'Bulk entry',
-                        'Game': game_bulk.replace(' ', ''),
-                        'player': player_bulk.replace(' ', ''),
-                        'goal_area': 'Unknown'
+                        'Game': game_bulk,
+                        'player': player_bulk
                     }
-                    df_zones = pd.concat([df_zones, pd.DataFrame([new_entry])], ignore_index=True)
+                    success = success and save_shot(new_entry, zones=True)
                 
                 if num_goals > 0:
                     new_entry = {
-                        'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        'timestamp': datetime.now().isoformat(),
                         'result': 'Goal',
                         'shot_origin': bulk_origin,
                         'nshots': int(num_goals),
                         'notes': 'Bulk entry',
-                        'Game': game_bulk.replace(' ', ''),
-                        'player': player_bulk.replace(' ', ''),
-                        'goal_area': 'Unknown'
+                        'Game': game_bulk,
+                        'player': player_bulk
                     }
-                    df_zones = pd.concat([df_zones, pd.DataFrame([new_entry])], ignore_index=True)
+                    success = success and save_shot(new_entry, zones=True)
                 
-                save_data(df_zones, zones=True)
-                st.success(f"✅ Added {int(num_saves)} saves and {int(num_goals)} goals!")
-
+                if success:
+                    st.success(f"✅ Added {int(num_saves)} saves and {int(num_goals)} goals from {bulk_origin}!")
 with tab2:
     st.markdown("## 📊 PERFORMANCE OVERVIEW")
     
     # Add filters at the top
     st.markdown("### 🔍 FILTERS")
-    col_filter1, col_filter2, col_filter3, col_filter4 = st.columns([1, 1, 1, 0.5])
+    col_filter1, col_filter2, col_filter3 = st.columns([1, 1, 0.5])
 
     #Deafult values for df
     df = load_data(zones=False)
+    df_bulk = load_data(zones=True)
     
     with col_filter1:
         # Get unique games from both datasets
@@ -386,15 +420,8 @@ with tab2:
         player_options = ["All Players"] + all_players
         selected_player = st.selectbox("Filter by Player", player_options, key='player_filter')
 
-    with col_filter3:
-        # select bulk statistics or detailed statistics
-        stat_type = st.radio("Data Type", ["Detailed Only", "Bulk Only"], horizontal=True, key='stat_type_filter')
-        if stat_type == "Detailed Only":
-            df = load_data(zones=False)
-        elif stat_type == "Bulk Only":
-            df = load_data(zones=True)
     
-    with col_filter4:
+    with col_filter3:
         if st.button("🔄 RESET FILTERS", key='reset_filters'):
             st.rerun()
     
@@ -483,8 +510,8 @@ with tab2:
         # Combine both datasets for complete origin stats
         all_origin_data = []
         
-        if len(df) > 0:
-            for _, row in df.iterrows():
+        if len(df_bulk) > 0:
+            for _, row in df_bulk.iterrows():
                 all_origin_data.append({
                     'shot_origin': row['shot_origin'],
                     'result': row['result'],
@@ -539,58 +566,9 @@ with tab2:
     
     with col_table2:
         st.markdown("### 📋 BY SHOT ORIGIN")
-        if len(df) > 0:
+        if len(df_bulk) > 0:
             if all_origin_data:
                 origin_stats = origin_df.groupby(['shot_origin', 'result'])['count'].sum().unstack(fill_value=0)
                 st.dataframe(origin_stats, use_container_width=True)
         else:
             st.info("No origin data yet")
-
-# with tab3:
-#     st.markdown("## 💾 DATA MANAGEMENT")
-    
-#     col_data1, col_data2 = st.columns(2, gap="large")
-    
-#     with col_data1:
-#         st.markdown("### 📁 DETAILED SHOT DATA")
-#         df = load_data(zones=False)
-#         if len(df) > 0:
-#             st.dataframe(df, use_container_width=True, height=300)
-            
-#             csv = df.to_csv(index=False)
-#             st.download_button(
-#                 label="📥 DOWNLOAD DETAILED DATA",
-#                 data=csv,
-#                 file_name=f'goalkeeper_detailed_{datetime.now().strftime("%Y%m%d")}.csv',
-#                 mime='text/csv'
-#             )
-            
-#             if st.button("🗑️ CLEAR DETAILED DATA", key='clear_detailed'):
-#                 if os.path.exists(DATA_FILE):
-#                     os.remove(DATA_FILE)
-#                     st.warning("Detailed data cleared!")
-#                     st.rerun()
-#         else:
-#             st.info("No detailed data yet")
-    
-#     with col_data2:
-#         st.markdown("### 📁 BULK ENTRY DATA")
-#         df_zones = load_data(zones=True)
-#         if len(df_zones) > 0:
-#             st.dataframe(df_zones, use_container_width=True, height=300)
-            
-#             csv_bulk = df_zones.to_csv(index=False)
-#             st.download_button(
-#                 label="📥 DOWNLOAD BULK DATA",
-#                 data=csv_bulk,
-#                 file_name=f'goalkeeper_bulk_{datetime.now().strftime("%Y%m%d")}.csv',
-#                 mime='text/csv'
-#             )
-            
-#             if st.button("🗑️ CLEAR BULK DATA", key='clear_bulk'):
-#                 if os.path.exists(DATA_FILE_ZONES):
-#                     os.remove(DATA_FILE_ZONES)
-#                     st.warning("Bulk data cleared!")
-#                     st.rerun()
-#         else:
-#             st.info("No bulk data yet")
