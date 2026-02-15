@@ -333,7 +333,7 @@ with tab1:
                 'result': result,
                 'shot_origin': shot_origin,
                 'Game': game,
-                'player': player,
+                'goalkeeper': player,
                 'nshots': int(nr)
             }
             
@@ -374,7 +374,7 @@ with tab1:
                         'nshots': int(num_saves),
                         'notes': 'Bulk entry',
                         'Game': game_bulk,
-                        'player': player_bulk
+                        'goalkeeper': player_bulk
                     }
                     success = success and save_shot(new_entry, zones=True)
                 
@@ -386,7 +386,7 @@ with tab1:
                         'nshots': int(num_goals),
                         'notes': 'Bulk entry',
                         'Game': game_bulk,
-                        'player': player_bulk
+                        'goalkeeper': player_bulk
                     }
                     success = success and save_shot(new_entry, zones=True)
                 
@@ -413,12 +413,12 @@ with tab2:
         selected_game = st.selectbox("Filter by Game", game_options, key='game_filter')
     
     with col_filter2:
-        # Get unique players from both datasets
-        players_detailed = df['player'].unique().tolist() if len(df) > 0 and 'player' in df.columns else []
-        all_players = [p.replace(' ', '') for p in players_detailed if p.replace(' ', '')]  # Remove empty strings
+        # Get unique goalkeepers from both datasets
+        goalkeepers_detailed = df['goalkeeper'].unique().tolist() if len(df) > 0 and 'goalkeeper' in df.columns else []
+        all_goalkeepers = [g.replace(' ', '') for g in goalkeepers_detailed if g.replace(' ', '')]  # Remove empty strings
         
-        player_options = ["All Players"] + all_players
-        selected_player = st.selectbox("Filter by Player", player_options, key='player_filter')
+        goalkeeper_options = ["All Goalkeepers"] + all_goalkeepers
+        selected_goalkeeper = st.selectbox("Filter by Goalkeeper", goalkeeper_options, key='goalkeeper_filter')
 
     
     with col_filter3:
@@ -429,8 +429,8 @@ with tab2:
     if selected_game != "All Games":
         df = df[df['Game'] == selected_game] if len(df) > 0 else df
     
-    if selected_player != "All Players":
-        df = df[df['player'] == selected_player] if len(df) > 0 else df
+    if selected_goalkeeper != "All Goalkeepers":
+        df = df[df['goalkeeper'] == selected_goalkeeper] if len(df) > 0 else df
     
     
     st.markdown("---")
